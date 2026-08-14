@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"Seu Nome" — Sobrancelha, Cílios & Maquiagem</title>
+<meta name="description" content="Estúdio especializado em design do olhar. Sobrancelhas desenhadas com precisão, cílios e maquiagem sob medida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF3F1;
+    --paper-2:#F3DDD6;
+    --ink:#3B2A26;
+    --ink-soft:#8C6E67;
+    --line:#C1694F;
+    --line-soft:#E3B7A8;
+    --card:#FFFFFF;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Inter',sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;line-height:1.08;}
+  .accent{font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--line);}
+  :focus-visible{outline:2px solid var(--line);outline-offset:3px;}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(247,245,242,0.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
+  .logo svg{width:22px;height:22px;}
+  .nav-links{display:flex;gap:32px;font-size:0.92rem;font-weight:500;}
+  .nav-links a{position:relative;padding:4px 0;color:var(--ink-soft);transition:color .2s ease;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--line);transition:width .25s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:2px;font-size:0.88rem;font-weight:500;white-space:nowrap;transition:background .2s ease,transform .2s ease;}
+  .nav-cta:hover{background:var(--line);transform:translateY(-1px);}
+  .menu-toggle{display:none;background:none;border:0;cursor:pointer;padding:6px;}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;transition:transform .2s, opacity .2s;}
+  .mobile-nav{display:none;flex-direction:column;gap:0;background:var(--card);border-bottom:1px solid var(--line-soft);}
+  .mobile-nav a{padding:16px 28px;font-size:1rem;font-weight:500;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);}
+  .mobile-nav a:last-child{border-bottom:0;}
+  .mobile-nav.open{display:flex;}
+
+  /* HERO */
+  .hero{padding:88px 0 64px;position:relative;}
+  .hero .eyebrow{font-size:0.82rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--line);font-weight:600;margin-bottom:18px;}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);max-width:14ch;}
+  .hero p.lede{margin-top:24px;max-width:46ch;font-size:1.08rem;color:var(--ink-soft);}
+  .hero-actions{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .btn-primary{background:var(--ink);color:var(--paper);padding:15px 28px;border-radius:2px;font-weight:500;font-size:0.95rem;display:inline-flex;align-items:center;gap:10px;transition:background .2s ease,transform .2s ease;}
+  .btn-primary:hover{background:var(--line);transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line-soft);padding:15px 28px;border-radius:2px;font-weight:500;font-size:0.95rem;transition:border-color .2s ease,background .2s ease;}
+  .btn-ghost:hover{border-color:var(--ink);background:var(--paper-2);}
+  .traco-line{width:100%;margin-top:56px;height:64px;}
+  .traco-line path{fill:none;stroke:var(--line);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.2s cubic-bezier(.65,0,.35,1) forwards .3s;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--line-soft),transparent);}
+
+  /* SECTIONS */
+  section{padding:96px 0;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap;}
+  .section-tag{font-size:0.82rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--line);font-weight:600;margin-bottom:10px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);}
+  .section-head p{color:var(--ink-soft);max-width:38ch;font-size:0.98rem;}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .service-card{display:block;background:var(--paper);border:1px solid var(--line-soft);border-radius:4px;padding:20px 18px;cursor:pointer;transition:background .25s ease,border-color .25s ease,transform .2s ease;}
+  .service-card:hover{background:var(--card);border-color:var(--line);transform:translateY(-2px);}
+  .service-icon{width:36px;height:36px;margin-bottom:16px;stroke:var(--line);stroke-width:1.6;fill:none;}
+  .service-card h3{font-size:1.15rem;margin-bottom:8px;}
+  .price{display:block;font-size:0.82rem;color:var(--line);font-weight:600;letter-spacing:0.04em;margin-bottom:14px;}
+  .service-card ul{list-style:none;padding:0;margin-bottom:20px;}
+  .service-card ul li{font-size:0.9rem;color:var(--ink-soft);padding:5px 0;border-bottom:1px solid var(--paper-2);}
+  .service-card ul li:last-child{border-bottom:0;}
+  .service-cta{font-size:0.85rem;font-weight:600;color:var(--line);}
+
+  /* GALLERY */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;grid-auto-rows:160px;}
+  .gallery-grid div{background:var(--paper-2);border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--line-soft);position:relative;}
+  .gallery-grid div img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+  .gallery-grid div:hover img{transform:scale(1.04);}
+  .gallery-grid div .cat-label{position:absolute;bottom:8px;left:10px;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(59,42,38,0.7);background:rgba(251,243,241,0.7);padding:3px 8px;border-radius:2px;}
+  .gallery-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0.6;}
+  .gallery-placeholder svg{width:28px;height:28px;}
+  .gallery-placeholder span{font-size:0.75rem;font-weight:500;}
+
+  /* CTA BAND */
+  .cta-band{background:var(--ink);color:var(--paper);border-radius:4px;padding:56px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .cta-band h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--paper);}
+  .cta-band p{color:#C9BFB8;margin-top:12px;font-size:1rem;}
+  .cta-info{border-left:1px solid #3A3833;padding-left:48px;}
+  .cta-info .row{margin-bottom:22px;}
+  .cta-info .row:last-child{margin-bottom:0;}
+  .cta-info .label{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;color:#8A867D;margin-bottom:6px;}
+  .cta-info .value{font-size:1rem;font-weight:500;}
+  .cta-band .btn-primary{background:var(--line);color:var(--paper);margin-top:24px;}
+  .cta-band .btn-primary:hover{background:var(--paper);color:var(--ink);}
+
+  /* FOOTER */
+  footer{padding:48px 0 36px;border-top:1px solid var(--line-soft);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer .logo{font-size:1.05rem;}
+  .footer-links{display:flex;gap:28px;font-size:0.88rem;color:var(--ink-soft);}
+  .footer-links a:hover{color:var(--ink);}
+  .footer-copy{font-size:0.8rem;color:var(--ink-soft);width:100%;margin-top:24px;text-align:center;}
+  .admin-link{display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin:4px auto 0;color:var(--line-soft);opacity:0.6;transition:opacity .2s ease,color .2s ease;}
+  .admin-link:hover{opacity:1;color:var(--line);}
+
+  /* WA FLOAT */
+  .wa-float{position:fixed;bottom:24px;right:24px;z-index:60;background:#1C1B19;color:var(--paper);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.18);transition:transform .2s ease,background .2s ease;}
+  .wa-float:hover{transform:scale(1.06);background:var(--line);}
+  .wa-float svg{width:26px;height:26px;}
+
+  /* RESPONSIVE */
+  @media(max-width:880px){
+    .nav-links{display:none;}
+    .menu-toggle{display:block;}
+    .services-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px;}
+    .cta-band{grid-template-columns:1fr;padding:44px 28px;}
+    .cta-info{border-left:0;padding-left:0;border-top:1px solid #3A3833;padding-top:28px;}
+    section{padding:64px 0;}
+    .hero{padding:56px 0 40px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="logo">
+        <svg viewBox="0 0 24 24"><path d="M2 15 Q 8 5, 12 8 T 22 9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        "Seu Nome"
+      </a>
+      <div class="nav-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
+      </div>
+      <a class="nav-cta" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">Agendar horário</a>
+      <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMenu(this)" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+    <a href="#servicos" onclick="fecharMenu()">Serviços</a>
+    <a href="#galeria" onclick="fecharMenu()">Galeria</a>
+    <a href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">Agendar pelo WhatsApp</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Sobrancelha · Cílios · Maquiagem</p>
+      <h1>Cada <span class="accent">traço</span> revela uma expressão.</h1>
+      <p class="lede">Um estúdio dedicado ao design do olhar — sobrancelhas desenhadas com precisão, cílios que abrem o olhar e maquiagem sob medida para cada ocasião.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">
+          Agendar pelo WhatsApp
+        </a>
+        <a class="btn-ghost" href="#servicos">Ver serviços</a>
+      </div>
+      <svg class="traco-line" viewBox="0 0 1000 64" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 32 C 120 8, 220 56, 340 30 S 560 4, 680 34 S 900 58, 1000 26"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="section-tag">Serviços</p>
+          <h2>O que fazemos por aqui</h2>
+        </div>
+        <p>Técnicas pensadas para valorizar seus traços naturais, com produtos de qualidade e resultado duradouro.</p>
+      </div>
+      <div class="services-grid">
+        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20sobrancelha%20%F0%9F%92%9B">
+          <svg class="service-icon" viewBox="0 0 24 24"><path d="M3 15 Q 8 6, 12 9 T 21 8" stroke-linecap="round"/></svg>
+          <h3>Sobrancelha</h3>
+          <span class="price">a partir de R$ 45</span>
+          <ul><li>Design com henna</li><li>Laminação</li><li>Micropigmentação</li><li>Manutenção mensal</li></ul>
+          <span class="service-cta">Agendar sobrancelha →</span>
+        </a>
+        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20c%C3%ADlios%20%F0%9F%92%9B">
+          <svg class="service-icon" viewBox="0 0 24 24"><path d="M4 13 Q 12 6, 20 13" stroke-linecap="round"/><path d="M7 13v4M12 13v5M17 13v4" stroke-linecap="round"/></svg>
+          <h3>Cílios</h3>
+          <span class="price">a partir de R$ 90</span>
+          <ul><li>Extensão fio a fio</li><li>Volume brasileiro</li><li>Lifting de cílios</li><li>Manutenção</li></ul>
+          <span class="service-cta">Agendar cílios →</span>
+        </a>
+        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20maquiagem%20%F0%9F%92%9B">
+          <svg class="service-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>
+          <h3>Maquiagem</h3>
+          <span class="price">a partir de R$ 120</span>
+          <ul><li>Maquiagem social</li><li>Noiva e madrinhas</li><li>Curso express</li><li>Pele + acabamento</li></ul>
+          <span class="service-cta">Agendar maquiagem →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="section-tag">Galeria</p>
+          <h2>Traços que já saíram daqui</h2>
+        </div>
+        <p>Fotos reais dos atendimentos — atualizadas diretamente pelo estúdio.</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- carregado via JS -->
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>Vamos desenhar seu próximo traço?</h2>
+          <p>Fale pelo WhatsApp e escolha o melhor horário para você. Respondemos rapidinho.</p>
+          <a class="btn-primary" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">Chamar no WhatsApp</a>
+        </div>
+        <div class="cta-info">
+          <div class="row">
+            <div class="label">WhatsApp</div>
+            <div class="value">(89) 98122-5667</div>
+          </div>
+          <div class="row">
+            <div class="label">Endereço</div>
+            <div class="value">Rua Exemplo, 123 — Centro</div>
+          </div>
+          <div class="row">
+            <div class="label">Horário</div>
+            <div class="value">Ter a Sáb, 9h às 19h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M2 15 Q 8 5, 12 8 T 22 9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      "Seu Nome"
+    </a>
+    <div class="footer-links">
+      <a href="https://wa.me/5589981225667">WhatsApp</a>
+      <a href="#">Instagram</a>
+      <a href="#servicos">Serviços</a>
+    </div>
+    <p class="footer-copy">© 2026 "Seu Nome". Todos os direitos reservados.</p>
+    <a href="admin.html" class="admin-link" aria-label="Painel administrativo" title="Painel administrativo">
+      <svg viewBox="0 0 24 24" width="14" height="14"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+    </a>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.1.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.1-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.5 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.2.8.8-3.1-.2-.3C4 14.9 3.6 13.5 3.6 12c0-4.6 3.8-8.4 8.4-8.4s8.4 3.8 8.4 8.4-3.8 8.2-8.4 8.2z"/></svg>
+</a>
+
+<script>
+  const SUPA_URL = 'https://bndrhdclhnldihumljaw.supabase.co';
+  const SUPA_KEY = 'sb_publishable_UXQStr_CoRbcdItbIAmTIw_9wBuJCNY';
+
+  const iconSvg = cat => `
+    <div class="gallery-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 15-5-5L5 19"/></svg>
+      <span>${cat}</span>
+    </div>`;
+
+  async function carregarGaleria() {
+    const grid = document.getElementById('gallery-grid');
+    const categorias = ['Sobrancelha', 'Cílios', 'Maquiagem'];
+
+    try {
+      const res  = await fetch(`${SUPA_URL}/rest/v1/fotos?secao=eq.galeria&select=categoria,public_url`, {
+        headers: { 'apikey': SUPA_KEY }
+      });
+      const rows = await res.json();
+
+      grid.innerHTML = '';
+      categorias.forEach(cat => {
+        const foto = rows.find(r => r.categoria === cat);
+        const div  = document.createElement('div');
+        div.setAttribute('data-category', cat);
+        if (foto) {
+          div.innerHTML = `<img src="${foto.public_url}" alt="Foto de ${cat}" loading="lazy"><span class="cat-label">${cat}</span>`;
+        } else {
+          div.innerHTML = iconSvg(cat);
+        }
+        grid.appendChild(div);
+      });
+    } catch {
+      // silencioso — mostra placeholders
+      grid.innerHTML = '';
+      ['Sobrancelha','Cílios','Maquiagem'].forEach(cat => {
+        const div = document.createElement('div');
+        div.innerHTML = iconSvg(cat);
+        grid.appendChild(div);
+      });
+    }
+  }
+
+  // Menu mobile
+  function toggleMenu(btn) {
+    const nav    = document.getElementById('mobile-nav');
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+  function fecharMenu() {
+    document.getElementById('mobile-nav').classList.remove('open');
+  }
+
+  carregarGaleria();
+</script>
+</body>
+</html>
