@@ -88,20 +88,19 @@
   .service-card:hover .service-bg{transform:scale(1.04);}
   .service-bg img{width:100%;height:100%;object-fit:cover;display:block;}
 
-  /* overlay escuro sobre a imagem */
+  /* overlay escuro — mais denso para legibilidade máxima */
   .service-overlay{
     position:absolute;inset:0;
-    background:linear-gradient(to top, rgba(30,18,14,0.82) 0%, rgba(30,18,14,0.25) 55%, rgba(30,18,14,0.05) 100%);
+    background:linear-gradient(to top,rgba(8,3,1,0.95) 0%,rgba(8,3,1,0.65) 40%,rgba(8,3,1,0.15) 75%,transparent 100%);
   }
-  /* quando não tem imagem o overlay é mais suave */
   .service-card.no-img .service-overlay{
-    background:linear-gradient(to top, rgba(59,42,38,0.45) 0%, rgba(59,42,38,0.05) 100%);
+    background:linear-gradient(to top,rgba(59,42,38,0.5) 0%,rgba(59,42,38,0.06) 100%);
   }
 
   /* conteúdo na frente */
   .service-content{
     position:relative;z-index:2;
-    padding:24px 22px;
+    padding:26px 24px;
     height:100%;
     display:flex;flex-direction:column;justify-content:flex-end;
     color:#fff;
@@ -109,20 +108,20 @@
   }
   .service-card.no-img .service-content{color:var(--ink);}
 
-  .service-icon{width:34px;height:34px;margin-bottom:auto;stroke:rgba(255,255,255,0.85);stroke-width:1.6;fill:none;}
-  .service-card.no-img .service-icon{stroke:var(--line);}
+  .service-icon{width:34px;height:34px;margin-bottom:auto;stroke:rgba(255,255,255,0.95);stroke-width:1.6;fill:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));}
+  .service-card.no-img .service-icon{stroke:var(--line);filter:none;}
 
-  .service-card h3{font-size:1.3rem;margin-bottom:6px;line-height:1.15;}
-  .price{display:block;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;margin-bottom:14px;opacity:0.9;}
-  .service-card.no-img .price{color:var(--line);}
+  .service-card h3{font-size:1.5rem;margin-bottom:8px;line-height:1.1;text-shadow:0 2px 10px rgba(0,0,0,0.8),0 1px 3px rgba(0,0,0,0.9);}
+  .price{display:block;font-size:0.88rem;font-weight:800;letter-spacing:0.08em;margin-bottom:16px;color:#FFD9C8;text-shadow:0 1px 5px rgba(0,0,0,0.7);}
+  .service-card.no-img .price{color:var(--line);text-shadow:none;}
 
-  .service-card ul{list-style:none;padding:0;margin-bottom:18px;}
-  .service-card ul li{font-size:0.88rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.12);opacity:0.88;}
-  .service-card.no-img ul li{border-bottom-color:var(--line-soft);color:var(--ink-soft);}
+  .service-card ul{list-style:none;padding:0;margin-bottom:20px;}
+  .service-card ul li{font-size:0.92rem;font-weight:500;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.18);text-shadow:0 1px 4px rgba(0,0,0,0.7);}
+  .service-card.no-img ul li{border-bottom-color:var(--line-soft);color:var(--ink-soft);text-shadow:none;font-weight:400;}
   .service-card ul li:last-child{border-bottom:0;}
 
-  .service-cta{font-size:0.85rem;font-weight:700;opacity:0.95;letter-spacing:0.02em;}
-  .service-card.no-img .service-cta{color:var(--line);}
+  .service-cta{font-size:0.9rem;font-weight:800;letter-spacing:0.04em;color:#FFD9C8;text-shadow:0 1px 5px rgba(0,0,0,0.7);}
+  .service-card.no-img .service-cta{color:var(--line);text-shadow:none;}
 
   /* GALLERY */
   .gallery-grid{
@@ -335,25 +334,33 @@
 
   async function carregarDados() {
     try {
-      const res  = await fetch(`${SUPA_URL}/rest/v1/fotos?select=*&order=indice.asc`, {
-        headers: { 'apikey': SUPA_KEY }
-      });
-      const rows = await res.json();
-      renderServicos(rows);
-      renderGaleria(rows);
+      const [resF, resC] = await Promise.all([
+        fetch(`${SUPA_URL}/rest/v1/fotos?select=*&order=indice.asc`, { headers:{'apikey':SUPA_KEY} }),
+        fetch(`${SUPA_URL}/rest/v1/categorias_config?select=*`,       { headers:{'apikey':SUPA_KEY} })
+      ]);
+      const rows    = await resF.json();
+      const configs = await resC.json();
+
+      // monta set de categorias ocultas
+      const ocultosServ = new Set(configs.filter(c=>c.secao==='servicos'&&c.oculto).map(c=>c.categoria));
+      const ocultosGal  = new Set(configs.filter(c=>c.secao==='galeria' &&c.oculto).map(c=>c.categoria));
+
+      renderServicos(rows, ocultosServ);
+      renderGaleria(rows, ocultosGal);
     } catch {
-      renderServicos([]);
-      renderGaleria([]);
+      renderServicos([], new Set());
+      renderGaleria([], new Set());
     }
   }
 
-  function renderServicos(rows) {
+  function renderServicos(rows, ocultos) {
     const grid = document.getElementById('services-grid');
     grid.innerHTML = '';
     CATS.forEach(cat => {
-      const foto = rows.find(r => r.secao === 'servicos' && r.categoria === cat);
+      if (ocultos.has(cat)) return; // categoria oculta — não renderiza
+      const foto   = rows.find(r => r.secao === 'servicos' && r.categoria === cat);
       const temImg = !!foto;
-      const card = document.createElement('a');
+      const card   = document.createElement('a');
       card.className = 'service-card' + (temImg ? '' : ' no-img');
       card.href = WA_CAT[cat];
       card.innerHTML = `
@@ -375,13 +382,14 @@
     });
   }
 
-  function renderGaleria(rows) {
+  function renderGaleria(rows, ocultos) {
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
-    const galRows = rows.filter(r => r.secao === 'galeria').sort((a,b) => a.indice - b.indice);
+    const galRows = rows
+      .filter(r => r.secao === 'galeria' && !ocultos.has(r.categoria))
+      .sort((a,b) => a.indice - b.indice);
 
     if (!galRows.length) {
-      // placeholders quando não há fotos
       CATS.forEach(cat => {
         const cell = document.createElement('div');
         cell.className = 'gallery-cell';
