@@ -10,26 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FBF3F1;
-    --paper-2:#F3DDD6;
-    --ink:#3B2A26;
-    --ink-soft:#8C6E67;
-    --line:#C1694F;
-    --line-soft:#E3B7A8;
-    --card:#FFFFFF;
-    --max:1120px;
+    --paper:#FBF3F1;--paper-2:#F3DDD6;--ink:#3B2A26;--ink-soft:#8C6E67;
+    --line:#C1694F;--line-soft:#E3B7A8;--card:#FFFFFF;--max:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  @media(prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
-  }
-  body{
-    background:var(--paper);color:var(--ink);
-    font-family:'Inter',sans-serif;line-height:1.5;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;
-  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;}
@@ -50,14 +37,14 @@
   .nav-cta{background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:2px;font-size:0.88rem;font-weight:500;white-space:nowrap;transition:background .2s ease,transform .2s ease;}
   .nav-cta:hover{background:var(--line);transform:translateY(-1px);}
   .menu-toggle{display:none;background:none;border:0;cursor:pointer;padding:6px;}
-  .menu-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;transition:transform .2s, opacity .2s;}
-  .mobile-nav{display:none;flex-direction:column;gap:0;background:var(--card);border-bottom:1px solid var(--line-soft);}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
+  .mobile-nav{display:none;flex-direction:column;background:var(--card);border-bottom:1px solid var(--line-soft);}
   .mobile-nav a{padding:16px 28px;font-size:1rem;font-weight:500;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);}
   .mobile-nav a:last-child{border-bottom:0;}
   .mobile-nav.open{display:flex;}
 
   /* HERO */
-  .hero{padding:88px 0 64px;position:relative;}
+  .hero{padding:88px 0 64px;}
   .hero .eyebrow{font-size:0.82rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--line);font-weight:600;margin-bottom:18px;}
   .hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);max-width:14ch;}
   .hero p.lede{margin-top:24px;max-width:46ch;font-size:1.08rem;color:var(--ink-soft);}
@@ -78,26 +65,82 @@
   .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);}
   .section-head p{color:var(--ink-soft);max-width:38ch;font-size:0.98rem;}
 
-  /* SERVICES */
+  /* SERVICES — cards com imagem de fundo */
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  .service-card{display:block;background:var(--paper);border:1px solid var(--line-soft);border-radius:4px;padding:20px 18px;cursor:pointer;transition:background .25s ease,border-color .25s ease,transform .2s ease;}
-  .service-card:hover{background:var(--card);border-color:var(--line);transform:translateY(-2px);}
-  .service-icon{width:36px;height:36px;margin-bottom:16px;stroke:var(--line);stroke-width:1.6;fill:none;}
-  .service-card h3{font-size:1.15rem;margin-bottom:8px;}
-  .price{display:block;font-size:0.82rem;color:var(--line);font-weight:600;letter-spacing:0.04em;margin-bottom:14px;}
-  .service-card ul{list-style:none;padding:0;margin-bottom:20px;}
-  .service-card ul li{font-size:0.9rem;color:var(--ink-soft);padding:5px 0;border-bottom:1px solid var(--paper-2);}
+  .service-card{
+    display:block;
+    border-radius:6px;
+    overflow:hidden;
+    cursor:pointer;
+    position:relative;
+    min-height:320px;
+    transition:transform .2s ease,box-shadow .2s ease;
+    text-decoration:none;
+  }
+  .service-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(59,42,38,0.18);}
+
+  /* camada de fundo — imagem ou cor sólida */
+  .service-bg{
+    position:absolute;inset:0;
+    background:var(--paper-2);
+    transition:transform .35s ease;
+  }
+  .service-card:hover .service-bg{transform:scale(1.04);}
+  .service-bg img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* overlay escuro sobre a imagem */
+  .service-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(30,18,14,0.82) 0%, rgba(30,18,14,0.25) 55%, rgba(30,18,14,0.05) 100%);
+  }
+  /* quando não tem imagem o overlay é mais suave */
+  .service-card.no-img .service-overlay{
+    background:linear-gradient(to top, rgba(59,42,38,0.45) 0%, rgba(59,42,38,0.05) 100%);
+  }
+
+  /* conteúdo na frente */
+  .service-content{
+    position:relative;z-index:2;
+    padding:24px 22px;
+    height:100%;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    color:#fff;
+    min-height:320px;
+  }
+  .service-card.no-img .service-content{color:var(--ink);}
+
+  .service-icon{width:34px;height:34px;margin-bottom:auto;stroke:rgba(255,255,255,0.85);stroke-width:1.6;fill:none;}
+  .service-card.no-img .service-icon{stroke:var(--line);}
+
+  .service-card h3{font-size:1.3rem;margin-bottom:6px;line-height:1.15;}
+  .price{display:block;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;margin-bottom:14px;opacity:0.9;}
+  .service-card.no-img .price{color:var(--line);}
+
+  .service-card ul{list-style:none;padding:0;margin-bottom:18px;}
+  .service-card ul li{font-size:0.88rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.12);opacity:0.88;}
+  .service-card.no-img ul li{border-bottom-color:var(--line-soft);color:var(--ink-soft);}
   .service-card ul li:last-child{border-bottom:0;}
-  .service-cta{font-size:0.85rem;font-weight:600;color:var(--line);}
+
+  .service-cta{font-size:0.85rem;font-weight:700;opacity:0.95;letter-spacing:0.02em;}
+  .service-card.no-img .service-cta{color:var(--line);}
 
   /* GALLERY */
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;grid-auto-rows:160px;}
-  .gallery-grid div{background:var(--paper-2);border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--line-soft);position:relative;}
-  .gallery-grid div img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
-  .gallery-grid div:hover img{transform:scale(1.04);}
-  .gallery-grid div .cat-label{position:absolute;bottom:8px;left:10px;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(59,42,38,0.7);background:rgba(251,243,241,0.7);padding:3px 8px;border-radius:2px;}
-  .gallery-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0.6;}
-  .gallery-placeholder svg{width:28px;height:28px;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    grid-auto-rows:180px;
+  }
+  .gallery-cell{
+    background:var(--paper-2);border-radius:6px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--line-soft);position:relative;
+  }
+  .gallery-cell img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+  .gallery-cell:hover img{transform:scale(1.05);}
+  .gallery-cell .cat-label{position:absolute;bottom:8px;left:10px;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.9);background:rgba(30,18,14,0.45);padding:3px 8px;border-radius:3px;backdrop-filter:blur(4px);}
+  .gallery-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0.55;}
+  .gallery-placeholder svg{width:26px;height:26px;}
   .gallery-placeholder span{font-size:0.75rem;font-weight:500;}
 
   /* CTA BAND */
@@ -132,7 +175,9 @@
     .nav-links{display:none;}
     .menu-toggle{display:block;}
     .services-grid{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px;}
+    .service-card{min-height:260px;}
+    .service-content{min-height:260px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;}
     .cta-band{grid-template-columns:1fr;padding:44px 28px;}
     .cta-info{border-left:0;padding-left:0;border-top:1px solid #3A3833;padding-top:28px;}
     section{padding:64px 0;}
@@ -173,9 +218,7 @@
       <h1>Cada <span class="accent">traço</span> revela uma expressão.</h1>
       <p class="lede">Um estúdio dedicado ao design do olhar — sobrancelhas desenhadas com precisão, cílios que abrem o olhar e maquiagem sob medida para cada ocasião.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">
-          Agendar pelo WhatsApp
-        </a>
+        <a class="btn-primary" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B">Agendar pelo WhatsApp</a>
         <a class="btn-ghost" href="#servicos">Ver serviços</a>
       </div>
       <svg class="traco-line" viewBox="0 0 1000 64" preserveAspectRatio="none" aria-hidden="true">
@@ -195,28 +238,8 @@
         </div>
         <p>Técnicas pensadas para valorizar seus traços naturais, com produtos de qualidade e resultado duradouro.</p>
       </div>
-      <div class="services-grid">
-        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20sobrancelha%20%F0%9F%92%9B">
-          <svg class="service-icon" viewBox="0 0 24 24"><path d="M3 15 Q 8 6, 12 9 T 21 8" stroke-linecap="round"/></svg>
-          <h3>Sobrancelha</h3>
-          <span class="price">a partir de R$ 45</span>
-          <ul><li>Design com henna</li><li>Laminação</li><li>Micropigmentação</li><li>Manutenção mensal</li></ul>
-          <span class="service-cta">Agendar sobrancelha →</span>
-        </a>
-        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20c%C3%ADlios%20%F0%9F%92%9B">
-          <svg class="service-icon" viewBox="0 0 24 24"><path d="M4 13 Q 12 6, 20 13" stroke-linecap="round"/><path d="M7 13v4M12 13v5M17 13v4" stroke-linecap="round"/></svg>
-          <h3>Cílios</h3>
-          <span class="price">a partir de R$ 90</span>
-          <ul><li>Extensão fio a fio</li><li>Volume brasileiro</li><li>Lifting de cílios</li><li>Manutenção</li></ul>
-          <span class="service-cta">Agendar cílios →</span>
-        </a>
-        <a class="service-card" href="https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20maquiagem%20%F0%9F%92%9B">
-          <svg class="service-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>
-          <h3>Maquiagem</h3>
-          <span class="price">a partir de R$ 120</span>
-          <ul><li>Maquiagem social</li><li>Noiva e madrinhas</li><li>Curso express</li><li>Pele + acabamento</li></ul>
-          <span class="service-cta">Agendar maquiagem →</span>
-        </a>
+      <div class="services-grid" id="services-grid">
+        <!-- gerado via JS -->
       </div>
     </div>
   </section>
@@ -231,7 +254,7 @@
         <p>Fotos reais dos atendimentos — atualizadas diretamente pelo estúdio.</p>
       </div>
       <div class="gallery-grid" id="gallery-grid">
-        <!-- carregado via JS -->
+        <!-- gerado via JS -->
       </div>
     </div>
   </section>
@@ -288,58 +311,109 @@
 <script>
   const SUPA_URL = 'https://bndrhdclhnldihumljaw.supabase.co';
   const SUPA_KEY = 'sb_publishable_UXQStr_CoRbcdItbIAmTIw_9wBuJCNY';
+  const CATS = ['Sobrancelha', 'Cílios', 'Maquiagem'];
+  const WA   = 'https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%9B';
 
-  const iconSvg = cat => `
-    <div class="gallery-placeholder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 15-5-5L5 19"/></svg>
-      <span>${cat}</span>
-    </div>`;
+  const ICONS = {
+    'Sobrancelha': `<svg viewBox="0 0 24 24"><path d="M3 15 Q 8 6, 12 9 T 21 8" stroke-linecap="round"/></svg>`,
+    'Cílios':      `<svg viewBox="0 0 24 24"><path d="M4 13 Q 12 6, 20 13" stroke-linecap="round"/><path d="M7 13v4M12 13v5M17 13v4" stroke-linecap="round"/></svg>`,
+    'Maquiagem':   `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>`
+  };
+  const PRECOS = { 'Sobrancelha':'a partir de R$ 45', 'Cílios':'a partir de R$ 90', 'Maquiagem':'a partir de R$ 120' };
+  const ITENS  = {
+    'Sobrancelha': ['Design com henna','Laminação','Micropigmentação','Manutenção mensal'],
+    'Cílios':      ['Extensão fio a fio','Volume brasileiro','Lifting de cílios','Manutenção'],
+    'Maquiagem':   ['Maquiagem social','Noiva e madrinhas','Curso express','Pele + acabamento']
+  };
+  const WA_CAT = {
+    'Sobrancelha': 'https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20sobrancelha%20%F0%9F%92%9B',
+    'Cílios':      'https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20c%C3%ADlios%20%F0%9F%92%9B',
+    'Maquiagem':   'https://wa.me/5589981225667?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20maquiagem%20%F0%9F%92%9B'
+  };
 
-  async function carregarGaleria() {
-    const grid = document.getElementById('gallery-grid');
-    const categorias = ['Sobrancelha', 'Cílios', 'Maquiagem'];
+  const placeholderIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 15-5-5L5 19"/></svg>`;
 
+  async function carregarDados() {
     try {
-      const res  = await fetch(`${SUPA_URL}/rest/v1/fotos?secao=eq.galeria&select=categoria,public_url`, {
+      const res  = await fetch(`${SUPA_URL}/rest/v1/fotos?select=*&order=indice.asc`, {
         headers: { 'apikey': SUPA_KEY }
       });
       const rows = await res.json();
-
-      grid.innerHTML = '';
-      categorias.forEach(cat => {
-        const foto = rows.find(r => r.categoria === cat);
-        const div  = document.createElement('div');
-        div.setAttribute('data-category', cat);
-        if (foto) {
-          div.innerHTML = `<img src="${foto.public_url}" alt="Foto de ${cat}" loading="lazy"><span class="cat-label">${cat}</span>`;
-        } else {
-          div.innerHTML = iconSvg(cat);
-        }
-        grid.appendChild(div);
-      });
+      renderServicos(rows);
+      renderGaleria(rows);
     } catch {
-      // silencioso — mostra placeholders
-      grid.innerHTML = '';
-      ['Sobrancelha','Cílios','Maquiagem'].forEach(cat => {
-        const div = document.createElement('div');
-        div.innerHTML = iconSvg(cat);
-        grid.appendChild(div);
-      });
+      renderServicos([]);
+      renderGaleria([]);
     }
+  }
+
+  function renderServicos(rows) {
+    const grid = document.getElementById('services-grid');
+    grid.innerHTML = '';
+    CATS.forEach(cat => {
+      const foto = rows.find(r => r.secao === 'servicos' && r.categoria === cat);
+      const temImg = !!foto;
+      const card = document.createElement('a');
+      card.className = 'service-card' + (temImg ? '' : ' no-img');
+      card.href = WA_CAT[cat];
+      card.innerHTML = `
+        <div class="service-bg">
+          ${temImg ? `<img src="${foto.public_url}" alt="${cat}" loading="lazy">` : ''}
+        </div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            ${ICONS[cat].replace(/<\/?svg[^>]*>/g,'')}
+          </svg>
+          <h3>${cat}</h3>
+          <span class="price">${PRECOS[cat]}</span>
+          <ul>${ITENS[cat].map(i=>`<li>${i}</li>`).join('')}</ul>
+          <span class="service-cta">Agendar ${cat.toLowerCase()} →</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function renderGaleria(rows) {
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = '';
+    const galRows = rows.filter(r => r.secao === 'galeria').sort((a,b) => a.indice - b.indice);
+
+    if (!galRows.length) {
+      // placeholders quando não há fotos
+      CATS.forEach(cat => {
+        const cell = document.createElement('div');
+        cell.className = 'gallery-cell';
+        cell.innerHTML = `<div class="gallery-placeholder">${placeholderIcon}<span>${cat}</span></div>`;
+        grid.appendChild(cell);
+      });
+      return;
+    }
+
+    galRows.forEach(f => {
+      const cell = document.createElement('div');
+      cell.className = 'gallery-cell';
+      cell.innerHTML = `
+        <img src="${f.public_url}" alt="Foto de ${f.categoria}" loading="lazy">
+        <span class="cat-label">${f.categoria}</span>
+      `;
+      grid.appendChild(cell);
+    });
   }
 
   // Menu mobile
   function toggleMenu(btn) {
-    const nav    = document.getElementById('mobile-nav');
+    const nav = document.getElementById('mobile-nav');
     const isOpen = nav.classList.contains('open');
     nav.classList.toggle('open');
-    btn.setAttribute('aria-expanded', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
   }
   function fecharMenu() {
     document.getElementById('mobile-nav').classList.remove('open');
   }
 
-  carregarGaleria();
+  carregarDados();
 </script>
 </body>
 </html>
